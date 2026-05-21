@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Raphael Kipsang — Freelance Full-Stack Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8D49A;
+    --gold-dim: #8A6D2E;
+    --bg: #0A0A0A;
+    --bg2: #111111;
+    --bg3: #181818;
+    --bg4: #222222;
+    --text: #F0EDE6;
+    --text2: #A09A8E;
+    --text3: #605A52;
+    --border: rgba(201,168,76,0.18);
+    --border2: rgba(201,168,76,0.35);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(10,10,10,0.88);
+    backdrop-filter: blur(20px);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--gold); letter-spacing: 0.03em; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--text2); font-size: 0.82rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: flex; align-items: center; padding: 8rem 4rem 4rem; position: relative; overflow: hidden; }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 70% 50%, rgba(201,168,76,0.06) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 60% at 20% 80%, rgba(46,74,58,0.15) 0%, transparent 60%);
+  }
+  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; max-width: 1200px; margin: 0 auto; width: 100%; position: relative; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.75rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+  .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
+  .hero-name { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 6vw, 5.5rem); line-height: 1.08; font-weight: 700; margin-bottom: 0.5rem; color: var(--text); }
+  .hero-name em { font-style: italic; color: var(--gold); }
+  .hero-title { font-size: 1.05rem; color: var(--text2); font-weight: 300; margin-bottom: 2rem; letter-spacing: 0.02em; }
+  .hero-desc { font-size: 0.95rem; color: var(--text2); line-height: 1.9; max-width: 480px; margin-bottom: 2.5rem; }
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 2rem; background: var(--gold); color: #0A0A0A; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: all 0.25s; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-outline { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 2rem; background: transparent; color: var(--text); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; border: 0.5px solid var(--border2); transition: all 0.25s; cursor: pointer; }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* Profile Card */
+  .hero-visual { display: flex; justify-content: center; align-items: center; }
+  .profile-card { width: 320px; background: var(--bg3); border: 0.5px solid var(--border); padding: 2rem; position: relative; }
+  .profile-card::before { content: ''; position: absolute; top: -1px; left: 2rem; right: 2rem; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .profile-avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--bg4); border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold); margin: 0 auto 1.25rem; }
+  .profile-card-name { text-align: center; font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--text); margin-bottom: 0.25rem; }
+  .profile-card-role { text-align: center; font-size: 0.78rem; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.5rem; }
+  .profile-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: var(--border); border: 0.5px solid var(--border); margin-bottom: 1.5rem; }
+  .profile-stat { background: var(--bg3); padding: 0.75rem 0.5rem; text-align: center; }
+  .profile-stat-num { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--gold); display: block; }
+  .profile-stat-label { font-size: 0.65rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; }
+  .profile-badges { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
+  .badge { padding: 0.25rem 0.75rem; border: 0.5px solid var(--border); font-size: 0.7rem; color: var(--text2); letter-spacing: 0.05em; text-transform: uppercase; }
+  .badge.gold { border-color: var(--gold-dim); color: var(--gold); }
+
+  /* SECTIONS */
+  section { padding: 6rem 4rem; max-width: 1200px; margin: 0 auto; }
+  .section-header { margin-bottom: 3.5rem; }
+  .section-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 700; line-height: 1.2; color: var(--text); }
+  .section-divider { width: 48px; height: 2px; background: var(--gold); margin-top: 1rem; }
+  .full-divider { height: 0.5px; background: var(--border); }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; align-items: start; }
+  .about-text { font-size: 0.95rem; color: var(--text2); line-height: 1.9; }
+  .about-text p + p { margin-top: 1.25rem; }
+  .highlight { color: var(--gold); font-weight: 500; }
+  .about-sidebar { background: var(--bg3); border: 0.5px solid var(--border); padding: 2rem; position: relative; }
+  .about-sidebar::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 2px; background: var(--gold); }
+  .sidebar-item { display: flex; flex-direction: column; gap: 0.25rem; padding: 0.75rem 0; border-bottom: 0.5px solid var(--border); }
+  .sidebar-item:last-child { border-bottom: none; }
+  .sidebar-label { font-size: 0.7rem; color: var(--text3); letter-spacing: 0.1em; text-transform: uppercase; }
+  .sidebar-value { font-size: 0.9rem; color: var(--text); }
+
+  /* SKILLS */
+  .skills-section { background: var(--bg2); }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+  .skill-card { background: var(--bg3); border: 0.5px solid var(--border); padding: 2rem; transition: border-color 0.25s; }
+  .skill-card:hover { border-color: var(--gold-dim); }
+  .skill-icon { width: 42px; height: 42px; background: rgba(201,168,76,0.1); border: 0.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 1rem; color: var(--gold); }
+  .skill-card-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--text); margin-bottom: 0.5rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+  .skill-tag { padding: 0.25rem 0.65rem; background: var(--bg4); border: 0.5px solid var(--border); font-size: 0.72rem; color: var(--text2); }
+  .skill-bar-wrap { margin-bottom: 0.75rem; }
+  .skill-bar-top { display: flex; justify-content: space-between; margin-bottom: 0.35rem; }
+  .skill-bar-name { font-size: 0.75rem; color: var(--text2); }
+  .skill-bar-pct { font-size: 0.75rem; color: var(--gold); }
+  .skill-bar-track { height: 2px; background: var(--bg4); overflow: hidden; }
+  .skill-bar-fill { height: 100%; background: var(--gold); }
+
+  /* PROJECTS */
+  .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; }
+  .project-card { background: var(--bg3); border: 0.5px solid var(--border); overflow: hidden; transition: transform 0.3s, border-color 0.3s; }
+  .project-card:hover { transform: translateY(-4px); border-color: var(--gold-dim); }
+  .project-thumb { height: 180px; background: var(--bg4); position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .project-thumb-bg { position: absolute; inset: 0; opacity: 0.5; }
+  .project-num { position: absolute; top: 1rem; left: 1.25rem; font-family: 'Playfair Display', serif; font-size: 2rem; color: rgba(201,168,76,0.15); font-weight: 700; line-height: 1; }
+  .project-thumb-icon { font-size: 2.8rem; position: relative; z-index: 1; }
+  .project-tag { position: absolute; top: 1rem; right: 1rem; padding: 0.25rem 0.75rem; background: rgba(10,10,10,0.8); border: 0.5px solid var(--gold-dim); font-size: 0.65rem; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase; }
+  .project-body { padding: 1.5rem; }
+  .project-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--text); margin-bottom: 0.5rem; }
+  .project-desc { font-size: 0.85rem; color: var(--text2); line-height: 1.7; margin-bottom: 1rem; }
+  .project-tools { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+  .tool-tag { padding: 0.2rem 0.6rem; background: var(--bg4); border: 0.5px solid var(--border); font-size: 0.7rem; color: var(--text3); }
+  .project-link { font-size: 0.78rem; color: var(--gold); text-decoration: none; letter-spacing: 0.05em; border-bottom: 0.5px solid var(--gold-dim); padding-bottom: 1px; transition: color 0.2s; }
+  .project-link:hover { color: var(--gold-light); }
+
+  /* CREDENTIALS */
+  .cred-section { background: var(--bg2); }
+  .creds-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .cred-card { background: var(--bg3); border: 0.5px solid var(--border); padding: 1.75rem; display: flex; gap: 1.25rem; align-items: flex-start; transition: border-color 0.2s; }
+  .cred-card:hover { border-color: var(--gold-dim); }
+  .cred-icon { width: 44px; height: 44px; flex-shrink: 0; background: rgba(201,168,76,0.08); border: 0.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--gold); }
+  .cred-body { flex: 1; }
+  .cred-title { font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 0.25rem; }
+  .cred-issuer { font-size: 0.78rem; color: var(--gold); margin-bottom: 0.35rem; }
+  .cred-date { font-size: 0.72rem; color: var(--text3); }
+
+  /* ACHIEVEMENTS */
+  .achievements-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+  .achievement-card { background: var(--bg3); border: 0.5px solid var(--border); padding: 1.75rem; position: relative; transition: border-color 0.2s; }
+  .achievement-card:hover { border-color: var(--gold-dim); }
+  .achievement-icon { font-size: 1.8rem; margin-bottom: 0.75rem; display: block; }
+  .achievement-title { font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 0.25rem; }
+  .achievement-sub { font-size: 0.78rem; color: var(--text2); line-height: 1.5; margin-bottom: 0.5rem; }
+  .achievement-year { font-size: 0.7rem; color: var(--gold); letter-spacing: 0.1em; }
+
+  /* SERVICES */
+  .services-section { background: var(--bg2); }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .service-card { background: var(--bg3); border: 0.5px solid var(--border); padding: 2rem; position: relative; transition: border-color 0.25s; }
+  .service-card:hover { border-color: var(--gold-dim); }
+  .service-card.featured { border-color: var(--gold-dim); }
+  .service-card.featured::before { content: 'Most Popular'; position: absolute; top: -1px; left: 50%; transform: translateX(-50%); background: var(--gold); color: #0A0A0A; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.8rem; }
+  .service-price { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold); margin-bottom: 0.25rem; }
+  .service-price-sub { font-size: 0.75rem; color: var(--text3); margin-bottom: 1rem; }
+  .service-title { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; }
+  .service-desc { font-size: 0.85rem; color: var(--text2); line-height: 1.7; margin-bottom: 1.25rem; }
+  .service-features { list-style: none; margin-bottom: 1.5rem; }
+  .service-features li { font-size: 0.82rem; color: var(--text2); padding: 0.35rem 0; border-bottom: 0.5px solid var(--border); display: flex; gap: 0.5rem; align-items: flex-start; }
+  .service-features li::before { content: '→'; color: var(--gold); flex-shrink: 0; }
+
+  /* PITCH */
+  .pitch-section { background: var(--bg3); border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border); }
+  .pitch-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .pitch-video-frame { background: var(--bg4); border: 0.5px solid var(--border); aspect-ratio: 16/9; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; position: relative; overflow: hidden; cursor: pointer; transition: border-color 0.2s; }
+  .pitch-video-frame:hover { border-color: var(--gold); }
+  .pitch-video-frame::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(201,168,76,0.05) 0%, transparent 70%); }
+  .play-btn { width: 64px; height: 64px; border-radius: 50%; border: 1.5px solid var(--gold); display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 1.5rem; position: relative; transition: background 0.2s; }
+  .pitch-video-frame:hover .play-btn { background: rgba(201,168,76,0.1); }
+  .pitch-label { font-size: 0.8rem; color: var(--text2); letter-spacing: 0.08em; text-transform: uppercase; position: relative; }
+  .pitch-content h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--text); margin-bottom: 1rem; line-height: 1.3; }
+  .pitch-content p { font-size: 0.9rem; color: var(--text2); line-height: 1.9; margin-bottom: 1.5rem; }
+  .pitch-bullets { list-style: none; }
+  .pitch-bullets li { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.85rem; color: var(--text2); padding: 0.5rem 0; border-bottom: 0.5px solid var(--border); }
+  .pitch-bullets li::before { content: '→'; color: var(--gold); flex-shrink: 0; margin-top: 0.1rem; }
+
+  /* CONTACT */
+  .contact-section { background: var(--bg2); }
+  .contact-inner { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; }
+  .contact-info h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--text); margin-bottom: 1rem; line-height: 1.3; }
+  .contact-info p { font-size: 0.9rem; color: var(--text2); line-height: 1.9; margin-bottom: 2rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 0.75rem; }
+  .contact-link { display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: var(--text2); text-decoration: none; padding: 0.75rem; border: 0.5px solid var(--border); transition: all 0.2s; }
+  .contact-link:hover { border-color: var(--gold); color: var(--gold); }
+  .contact-link-icon { font-size: 1rem; color: var(--gold); }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-field { display: flex; flex-direction: column; gap: 0.5rem; }
+  .form-label { font-size: 0.75rem; color: var(--text2); letter-spacing: 0.08em; text-transform: uppercase; }
+  .form-input, .form-textarea { background: var(--bg3); border: 0.5px solid var(--border); color: var(--text); padding: 0.75rem 1rem; font-size: 0.9rem; font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.2s; resize: none; }
+  .form-input:focus, .form-textarea:focus { border-color: var(--gold); }
+  .form-input::placeholder, .form-textarea::placeholder { color: var(--text3); }
+  .form-textarea { height: 120px; }
+
+  /* FOOTER */
+  footer { padding: 2.5rem 4rem; border-top: 0.5px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  .footer-name { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1rem; }
+  .footer-copy { font-size: 0.8rem; color: var(--text3); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 0.8rem; color: var(--text3); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ANIMATE */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 6rem 1.5rem 3rem; }
+    .hero-grid, .about-grid, .pitch-inner, .contact-inner { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    section { padding: 4rem 1.5rem; }
+    footer { padding: 2rem 1.5rem; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Raphael Kipsang</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#credentials">Credentials</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-eyebrow">Freelance Full-Stack Developer</div>
+      <h1 class="hero-name">Raphael<br/><em>Kipsang</em></h1>
+      <p class="hero-title">Web Apps · Portfolios · Systems That Deliver Results</p>
+      <p class="hero-desc">
+        Got a project idea? I turn it into a real, working product. From sleek portfolio sites
+        to full-stack web applications — I deliver clean, fast, and client-ready solutions.
+        3+ years of hands-on experience. Available for hire right now.
+      </p>
+      <div class="hero-ctas">
+        <a href="#services" class="btn-primary">Hire Me →</a>
+        <a href="#work" class="btn-outline">See My Work</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="profile-card">
+        <div class="profile-avatar">RK</div>
+        <p class="profile-card-name">Raphael Kipsang</p>
+        <p class="profile-card-role">Freelance Developer</p>
+        <div class="profile-stats">
+          <div class="profile-stat">
+            <span class="profile-stat-num">6+</span>
+            <span class="profile-stat-label">Projects</span>
+          </div>
+          <div class="profile-stat">
+            <span class="profile-stat-num">3+</span>
+            <span class="profile-stat-label">Yrs Exp.</span>
+          </div>
+          <div class="profile-stat">
+            <span class="profile-stat-num">100%</span>
+            <span class="profile-stat-label">Committed</span>
+          </div>
+        </div>
+        <div class="profile-badges">
+          <span class="badge gold">Open to Work</span>
+          <span class="badge">Django</span>
+          <span class="badge">React</span>
+          <span class="badge">Python</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="full-divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header reveal">
+    <div class="section-label">01 — About Me</div>
+    <h2 class="section-title">Who I Am &amp; What I Do</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="about-grid">
+    <div class="reveal">
+      <div class="about-text">
+        <p>
+          I'm a <span class="highlight">freelance full-stack developer</span> who builds things that actually work —
+          not just look good in a demo. Whether you need a portfolio to land your next job, a web app
+          to run your business, or a system that solves a real problem, I've got you covered end-to-end.
+        </p>
+        <p>
+          With a <span class="highlight">BSc in Computer Science from SEKU</span> and 3+ years of real-world experience
+          building and maintaining live systems, I know what it takes to ship clean, reliable software.
+          I work with <span class="highlight">Django, React, and Python</span> to deliver full-stack solutions —
+          from the database to the user interface.
+        </p>
+        <p>
+          I keep communication clear, deadlines real, and code <span class="highlight">documented and maintainable</span>.
+          When you work with me, you get a developer who treats your project like it's his own.
+        </p>
+      </div>
+    </div>
+    <div class="about-sidebar reveal">
+      <div class="sidebar-item">
+        <span class="sidebar-label">Availability</span>
+        <span class="sidebar-value" style="color:var(--gold)">✓ Open for new projects</span>
+      </div>
+      <div class="sidebar-item">
+        <span class="sidebar-label">Based In</span>
+        <span class="sidebar-value">Kenya — Remote Friendly</span>
+      </div>
+      <div class="sidebar-item">
+        <span class="sidebar-label">Turnaround</span>
+        <span class="sidebar-value">Fast delivery, clear milestones</span>
+      </div>
+      <div class="sidebar-item">
+        <span class="sidebar-label">Speciality</span>
+        <span class="sidebar-value">Django · React · Full-Stack</span>
+      </div>
+      <div class="sidebar-item">
+        <span class="sidebar-label">Email</span>
+        <span class="sidebar-value" style="color:var(--gold)">raphael.kipsang3@gmail.com</span>
+      </div>
+      <div class="sidebar-item">
+        <span class="sidebar-label">WhatsApp</span>
+        <span class="sidebar-value">0727 532 791</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- SKILLS -->
+<div class="skills-section">
+  <section id="skills">
+    <div class="section-header reveal">
+      <div class="section-label">02 — Technical Expertise</div>
+      <h2 class="section-title">Skills &amp; Proficiencies</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-icon">{ }</div>
+        <h3 class="skill-card-title">Programming Languages</h3>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-top"><span class="skill-bar-name">Python</span><span class="skill-bar-pct">92%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:92%"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-top"><span class="skill-bar-name">JavaScript</span><span class="skill-bar-pct">85%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:85%"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-top"><span class="skill-bar-name">Java</span><span class="skill-bar-pct">78%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:78%"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-top"><span class="skill-bar-name">Shell Scripting</span><span class="skill-bar-pct">80%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:80%"></div></div>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">⬡</div>
+        <h3 class="skill-card-title">Web Frameworks</h3>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-top"><span class="skill-bar-name">Django</span><span class="skill-bar-pct">90%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:90%"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-top"><span class="skill-bar-name">Django REST Framework</span><span class="skill-bar-pct">85%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:85%"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-top"><span class="skill-bar-name">React</span><span class="skill-bar-pct">80%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:80%"></div></div>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">◈</div>
+        <h3 class="skill-card-title">Databases &amp; Systems</h3>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-top"><span class="skill-bar-name">PostgreSQL</span><span class="skill-bar-pct">88%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:88%"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-top"><span class="skill-bar-name">SQLite</span><span class="skill-bar-pct">85%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:85%"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-top"><span class="skill-bar-name">Linux (Ubuntu, Arch)</span><span class="skill-bar-pct">90%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:90%"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-top"><span class="skill-bar-name">Docker</span><span class="skill-bar-pct">75%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:75%"></div></div>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">◉</div>
+        <h3 class="skill-card-title">Tools &amp; Platforms</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Git / GitHub</span>
+          <span class="skill-tag">Postman</span>
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">Linux Terminal</span>
+          <span class="skill-tag">VS Code</span>
+          <span class="skill-tag">Jupyter</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🌐</div>
+        <h3 class="skill-card-title">Networking</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">LAN Setup</span>
+          <span class="skill-tag">IP Phone Config</span>
+          <span class="skill-tag">Router Management</span>
+          <span class="skill-tag">Switch Config</span>
+          <span class="skill-tag">Network Security</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">◻</div>
+        <h3 class="skill-card-title">Machine Learning</h3>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-top"><span class="skill-bar-name">Data Analysis</span><span class="skill-bar-pct">78%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:78%"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-top"><span class="skill-bar-name">Classification Models</span><span class="skill-bar-pct">72%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:72%"></div></div>
+        </div>
+        <div class="skill-tags" style="margin-top:0.75rem">
+          <span class="skill-tag">scikit-learn</span>
+          <span class="skill-tag">Pandas</span>
+          <span class="skill-tag">Jupyter</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="full-divider"></div>
+
+<!-- PROJECTS -->
+<section id="work">
+  <div class="section-header reveal">
+    <div class="section-label">03 — Portfolio</div>
+    <h2 class="section-title">Featured Projects</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="portfolio-grid">
+    <div class="project-card reveal">
+      <div class="project-thumb">
+        <div class="project-thumb-bg" style="background: linear-gradient(135deg, #0d1e30, #1a3a5c);"></div>
+        <div class="project-num">01</div>
+        <div class="project-thumb-icon">🎓</div>
+        <span class="project-tag">Full Stack</span>
+      </div>
+      <div class="project-body">
+        <h3 class="project-title">BlueSkillsHub — E-Learning Platform</h3>
+        <p class="project-desc">A fully functional e-learning platform where instructors publish courses and learners track their progress. Built to scale from day one.</p>
+        <div class="project-tools">
+          <span class="tool-tag">Full Stack</span><span class="tool-tag">E-Learning</span><span class="tool-tag">Database</span><span class="tool-tag">Web Dev</span>
+        </div>
+        <a href="https://github.com/raphael-kipsang" target="_blank" class="project-link">View on GitHub →</a>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb">
+        <div class="project-thumb-bg" style="background: linear-gradient(135deg, #1a1a0d, #3a3a10);"></div>
+        <div class="project-num">02</div>
+        <div class="project-thumb-icon">🗄️</div>
+        <span class="project-tag">Backend</span>
+      </div>
+      <div class="project-body">
+        <h3 class="project-title">RDBMS — Custom Relational Database</h3>
+        <p class="project-desc">A custom relational database implementation with SQL interface, built from scratch to understand database architecture and query processing.</p>
+        <div class="project-tools">
+          <span class="tool-tag">Python</span><span class="tool-tag">Database</span><span class="tool-tag">SQL</span><span class="tool-tag">Architecture</span>
+        </div>
+        <a href="https://github.com/raphael-kipsang" target="_blank" class="project-link">View on GitHub →</a>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb">
+        <div class="project-thumb-bg" style="background: linear-gradient(135deg, #1a0d1a, #3a1040);"></div>
+        <div class="project-num">03</div>
+        <div class="project-thumb-icon">✍️</div>
+        <span class="project-tag">Full Stack</span>
+      </div>
+      <div class="project-body">
+        <h3 class="project-title">Blog Django — Full Stack</h3>
+        <p class="project-desc">Complete blog platform with Django backend and React frontend. Features user authentication, commenting system, and full CRUD operations.</p>
+        <div class="project-tools">
+          <span class="tool-tag">Django</span><span class="tool-tag">React</span><span class="tool-tag">Python</span><span class="tool-tag">JavaScript</span>
+        </div>
+        <a href="https://github.com/raphael-kipsang" target="_blank" class="project-link">View on GitHub →</a>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb">
+        <div class="project-thumb-bg" style="background: linear-gradient(135deg, #0d1a10, #1a3a20);"></div>
+        <div class="project-num">04</div>
+        <div class="project-thumb-icon">🏢</div>
+        <span class="project-tag">Full Stack</span>
+      </div>
+      <div class="project-body">
+        <h3 class="project-title">Django Insurance Management System</h3>
+        <p class="project-desc">A production-ready insurance platform handling policy management, claims processing, and client records — built to replace manual paperwork entirely.</p>
+        <div class="project-tools">
+          <span class="tool-tag">Django</span><span class="tool-tag">Python</span><span class="tool-tag">Database</span><span class="tool-tag">ORM</span>
+        </div>
+        <a href="https://github.com/raphael-kipsang" target="_blank" class="project-link">View on GitHub →</a>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb">
+        <div class="project-thumb-bg" style="background: linear-gradient(135deg, #1a100d, #3a2010);"></div>
+        <div class="project-num">05</div>
+        <div class="project-thumb-icon">🤖</div>
+        <span class="project-tag">Machine Learning</span>
+      </div>
+      <div class="project-body">
+        <h3 class="project-title">ML Loan Prediction System</h3>
+        <p class="project-desc">Machine learning model for predicting loan approval using classification algorithms. Includes data preprocessing and model evaluation.</p>
+        <div class="project-tools">
+          <span class="tool-tag">Python</span><span class="tool-tag">ML</span><span class="tool-tag">Data Analysis</span><span class="tool-tag">Jupyter</span>
+        </div>
+        <a href="https://github.com/raphael-kipsang" target="_blank" class="project-link">View on GitHub →</a>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb">
+        <div class="project-thumb-bg" style="background: linear-gradient(135deg, #0d1520, #102030);"></div>
+        <div class="project-num">06</div>
+        <div class="project-thumb-icon">💻</div>
+        <span class="project-tag">Frontend</span>
+      </div>
+      <div class="project-body">
+        <h3 class="project-title">Smart Tech — IT Solutions Website</h3>
+        <p class="project-desc">Professional IT solutions company website showcasing tech services. Features responsive design, service showcase, and contact integration.</p>
+        <div class="project-tools">
+          <span class="tool-tag">HTML</span><span class="tool-tag">CSS</span><span class="tool-tag">Responsive</span><span class="tool-tag">IT Services</span>
+        </div>
+        <a href="https://github.com/raphael-kipsang" target="_blank" class="project-link">View on GitHub →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- CREDENTIALS -->
+<div class="cred-section">
+  <section id="credentials">
+    <div class="section-header reveal">
+      <div class="section-label">04 — Education &amp; Credentials</div>
+      <h2 class="section-title">Qualifications</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="creds-grid">
+      <div class="cred-card reveal">
+        <div class="cred-icon">🎓</div>
+        <div class="cred-body">
+          <div class="cred-title">BSc Computer Science — Second Class Honours (Upper)</div>
+          <div class="cred-issuer">South Eastern Kenya University (SEKU)</div>
+          <div class="cred-date">Graduated 2023</div>
+        </div>
+      </div>
+      <div class="cred-card reveal">
+        <div class="cred-icon">🔧</div>
+        <div class="cred-body">
+          <div class="cred-title">System Administrator</div>
+          <div class="cred-issuer">Kapchepkor Technical Institute</div>
+          <div class="cred-date">Present</div>
+        </div>
+      </div>
+      <div class="cred-card reveal">
+        <div class="cred-icon">📚</div>
+        <div class="cred-body">
+          <div class="cred-title">Digital Trainer — Digital Literacy Programme</div>
+          <div class="cred-issuer">Ministry of Education, Kenya</div>
+          <div class="cred-date">2024</div>
+        </div>
+      </div>
+      <div class="cred-card reveal">
+        <div class="cred-icon">🌐</div>
+        <div class="cred-body">
+          <div class="cred-title">Network Infrastructure — Campus LAN Design &amp; Implementation</div>
+          <div class="cred-issuer">Kapchepkor Technical Institute</div>
+          <div class="cred-date">2023</div>
+        </div>
+      </div>
+      <div class="cred-card reveal">
+        <div class="cred-icon">⭐</div>
+        <div class="cred-body">
+          <div class="cred-title">Open Source Contributor</div>
+          <div class="cred-issuer">GitHub — Active Repository Maintainer</div>
+          <div class="cred-date">2024 — Present</div>
+        </div>
+      </div>
+      <div class="cred-card reveal">
+        <div class="cred-icon">💡</div>
+        <div class="cred-body">
+          <div class="cred-title">Full-Stack Development</div>
+          <div class="cred-issuer">Django · React · PostgreSQL — Self-directed mastery</div>
+          <div class="cred-date">2024</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="full-divider"></div>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="section-header reveal">
+    <div class="section-label">05 — Milestones</div>
+    <h2 class="section-title">Achievements</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="achievements-grid">
+    <div class="achievement-card reveal">
+      <span class="achievement-icon">🎓</span>
+      <div class="achievement-title">BSc Computer Science</div>
+      <div class="achievement-sub">SEKU — Second Class Honours (Upper Division)</div>
+      <div class="achievement-year">2023</div>
+    </div>
+    <div class="achievement-card reveal">
+      <span class="achievement-icon">💻</span>
+      <div class="achievement-title">Full-Stack Developer</div>
+      <div class="achievement-sub">Django, React, PostgreSQL expertise achieved</div>
+      <div class="achievement-year">2024</div>
+    </div>
+    <div class="achievement-card reveal">
+      <span class="achievement-icon">🌐</span>
+      <div class="achievement-title">Network Infrastructure</div>
+      <div class="achievement-sub">Campus LAN design &amp; implementation completed</div>
+      <div class="achievement-year">2023</div>
+    </div>
+    <div class="achievement-card reveal">
+      <span class="achievement-icon">📚</span>
+      <div class="achievement-title">Digital Trainer</div>
+      <div class="achievement-sub">Ministry of Education Digital Literacy Programme</div>
+      <div class="achievement-year">2024</div>
+    </div>
+    <div class="achievement-card reveal">
+      <span class="achievement-icon">🔧</span>
+      <div class="achievement-title">ICT Professional</div>
+      <div class="achievement-sub">System Administrator — Kapchepkor Institute</div>
+      <div class="achievement-year">Present</div>
+    </div>
+    <div class="achievement-card reveal">
+      <span class="achievement-icon">⭐</span>
+      <div class="achievement-title">Open Source</div>
+      <div class="achievement-sub">Active GitHub contributor &amp; repository maintainer</div>
+      <div class="achievement-year">2024</div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- SERVICES -->
+<div class="services-section">
+  <section id="services">
+    <div class="section-header reveal">
+      <div class="section-label">06 — What I Offer</div>
+      <h2 class="section-title">Services &amp; Pricing</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="services-grid">
+      <div class="service-card featured reveal">
+        <div class="service-price">KSH 7,000</div>
+        <div class="service-price-sub">One-time · Delivered in 5–7 days</div>
+        <div class="service-title">Portfolio Website</div>
+        <div class="service-desc">A sharp, professional portfolio that gets you noticed — designed to win clients or land that job. I handle everything from design to deployment.</div>
+        <ul class="service-features">
+          <li>Custom design built around you</li>
+          <li>Mobile &amp; desktop responsive</li>
+          <li>Project showcase section</li>
+          <li>Working contact form</li>
+          <li>5+ pages, SEO ready</li>
+          <li>Free revisions until you're happy</li>
+        </ul>
+        <a href="mailto:raphael.kipsang3@gmail.com?subject=Portfolio Development Enquiry" class="btn-primary">Start My Portfolio →</a>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-price">KSH 15K–200K</div>
+        <div class="service-price-sub">Scope-based · Timeline agreed upfront</div>
+        <div class="service-title">Web Application</div>
+        <div class="service-desc">Need a system that actually runs your business? I build full-stack web apps — from simple MVPs to complex enterprise platforms. You describe it, I build it.</div>
+        <ul class="service-features">
+          <li>Full frontend &amp; backend development</li>
+          <li>Database design &amp; integration</li>
+          <li>User login &amp; authentication</li>
+          <li>REST API development</li>
+          <li>Admin dashboard included</li>
+        </ul>
+        <a href="mailto:raphael.kipsang3@gmail.com?subject=Web Application Enquiry" class="btn-outline">Discuss My Project →</a>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-price">KSH 1,500</div>
+        <div class="service-price-sub">Per hour · Book as few or as many as you need</div>
+        <div class="service-title">Technical Consultation</div>
+        <div class="service-desc">Stuck on a problem? Not sure what stack to use? I'll give you straight, no-fluff technical advice — code review, architecture decisions, or implementation help.</div>
+        <ul class="service-features">
+          <li>Code review &amp; feedback</li>
+          <li>Architecture design</li>
+          <li>Tech stack recommendations</li>
+          <li>Best practices guidance</li>
+        </ul>
+        <a href="mailto:raphael.kipsang3@gmail.com?subject=Consultation Enquiry" class="btn-outline">Book a Session →</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="full-divider"></div>
+
+<!-- PITCH -->
+<div class="pitch-section">
+  <section id="pitch" style="max-width:1200px;margin:0 auto;">
+    <div class="pitch-inner">
+      <div class="reveal">
+        <div class="section-label" style="margin-bottom:0.75rem">07 — Pitch</div>
+        <div class="pitch-video-frame" style="padding:0;overflow:hidden;cursor:default;">
+          <iframe
+            src="https://drive.google.com/file/d/1u69PpWFqaWcdmiyy5KVVM1Eq4VHgnC2c/preview"
+            width="100%"
+            height="100%"
+            style="border:none;display:block;"
+            allow="autoplay"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+      <div class="pitch-content reveal">
+        <h3>Why Hire<br/>Me?</h3>
+        <p>
+          I don't just write code — I solve problems. Every project I take on gets my full attention,
+          clear communication, and a deliverable you'll actually be proud to show off.
+          No ghosting. No bloated timelines. Just results.
+        </p>
+        <ul class="pitch-bullets">
+          <li>Solid BSc Computer Science foundation — I understand how systems really work</li>
+          <li>Django + React full-stack — I own the entire project, front to back</li>
+          <li>Real infrastructure experience — I don't just build, I deploy and maintain</li>
+          <li>Machine learning &amp; data skills — for smarter, insight-driven applications</li>
+          <li>Fast delivery, honest timelines, and I actually respond to messages</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="full-divider"></div>
+
+<!-- CONTACT -->
+<div class="contact-section">
+  <section id="contact">
+    <div class="section-header reveal">
+      <div class="section-label">08 — Get In Touch</div>
+      <h2 class="section-title">Let's Work Together</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="contact-inner">
+      <div class="reveal">
+        <div class="contact-info">
+            <h3>Let's Build Something Together</h3>
+            <p>Have a project in mind? Tell me what you need and I'll get back to you within 24 hours with a clear plan and honest quote. No sales pitch — just a straight conversation about your project.</p>
+          </div>
+        <div class="contact-links">
+          <a href="mailto:raphael.kipsang3@gmail.com" class="contact-link">
+            <span class="contact-link-icon">✉</span>
+            raphael.kipsang3@gmail.com
+          </a>
+          <a href="tel:0727532791" class="contact-link">
+            <span class="contact-link-icon">☎</span>
+            0727 532 791
+          </a>
+          <a href="tel:0716900335" class="contact-link">
+            <span class="contact-link-icon">☎</span>
+            0716 900 335
+          </a>
+          <a href="https://wa.me/254727532791" target="_blank" class="contact-link">
+            <span class="contact-link-icon">💬</span>
+            WhatsApp — Message Me Directly
+          </a>
+          <a href="https://github.com/raphael-kipsang" target="_blank" class="contact-link">
+            <span class="contact-link-icon">↗</span>
+            GitHub Profile
+          </a>
+        </div>
+      </div>
+      <div class="reveal">
+        <form class="contact-form" onsubmit="handleForm(event)">
+          <div class="form-row">
+            <div class="form-field">
+              <label class="form-label">First Name</label>
+              <input type="text" class="form-input" placeholder="John" required/>
+            </div>
+            <div class="form-field">
+              <label class="form-label">Last Name</label>
+              <input type="text" class="form-input" placeholder="Kamau" required/>
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-input" placeholder="john@company.com" required/>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Service Needed</label>
+            <input type="text" class="form-input" placeholder="e.g. Portfolio, Web App, Consultation..."/>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Message</label>
+            <textarea class="form-textarea" placeholder="Tell me about your project..." required></textarea>
+          </div>
+          <button type="submit" class="btn-primary" style="align-self:flex-start">Send Message →</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Raphael Kipsang · Freelance Developer</div>
+  <div class="footer-copy">© 2026 Raphael Kipsang. Available for freelance projects — let's build something great.</div>
+  <div class="footer-links">
+    <a href="#about">About</a>
+    <a href="#work">Work</a>
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  function handleForm(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.textContent = 'Message Sent ✓';
+    btn.style.background = '#2e7d4a';
+    const name = e.target.querySelector('input[type="text"]').value;
+    const email = e.target.querySelector('input[type="email"]').value;
+    const msg = e.target.querySelector('textarea').value;
+    window.open(`mailto:raphael.kipsang3@gmail.com?subject=Portfolio Enquiry from ${name}&body=${encodeURIComponent(msg)}%0A%0AFrom: ${name}%0AEmail: ${email}`, '_blank');
+    setTimeout(() => { btn.textContent = 'Send Message →'; btn.style.background = ''; e.target.reset(); }, 3000);
+  }
+</script>
+</body>
+</html>
